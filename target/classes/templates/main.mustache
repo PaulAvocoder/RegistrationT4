@@ -9,21 +9,14 @@
     </form>
 </div>
 
-<div>
-    <form method="post">
-        <input type="text" name="text" placeholder="Insert messagu"/>
-        <input type="text" name="tag" placeholder="TAG"/>
-        <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
-        <button type="submit">ADD</button>
-
-    </form>
-</div>
-<div>List messag</div>
+<div>List users</div>
 {{#messages}}
     <div>
         <b>{{id}}</b>
-        <span>{{text}}</span>
-        <i>{{tag}}</i>
+        <span>{{username}}</span>
+        <i>{{pss}}</i>
+        <i>{{active}}</i>
+        <span>{{email}}</span>
     </div>
 {{/messages}}
 </body>

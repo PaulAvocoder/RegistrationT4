@@ -1,19 +1,17 @@
 package com.registr.controller;
 
-import com.registr.domain.Message;
-import com.registr.repos.MessageRepo;
+import com.registr.domain.User;
+import com.registr.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
 
 @Controller
 public class MainController {
     @Autowired
-    private MessageRepo messageRepo;
+    private UserRepo userRepo;
 
     @GetMapping("/")
 
@@ -23,8 +21,15 @@ public class MainController {
 
     @GetMapping("/main")
     public String main(Map<String, Object> model) {
-        Iterable<Message> messages = messageRepo.findAll();
+        Iterable<User> messages = userRepo.findAll();
         model.put("messages", messages);
+
+        for(Map.Entry<String, Object> pair : model.entrySet())
+        {
+            var value = pair.getValue();
+            System.out.println(value);
+        }
+
         return "main";
     }
 
