@@ -1,12 +1,10 @@
 package com.registr.domain;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(schema = "public", name = "message")
 public class Message {
 @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

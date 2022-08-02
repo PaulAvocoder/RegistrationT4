@@ -2,20 +2,29 @@
 
 <body>
 <div>
+
+    <form action="/logout" method="post">
+        <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
+        <input type="submit" value="Sign Out"/>
+    </form>
+</div>
+
+<div>
     <form method="post">
-        <input type="text" name="text" placeholder="Insert messagu">
-        <input type="text" name="tag" placeholder="TAG">
-<button type="submit">ADD</button>
+        <input type="text" name="text" placeholder="Insert messagu"/>
+        <input type="text" name="tag" placeholder="TAG"/>
+        <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
+        <button type="submit">ADD</button>
 
     </form>
 </div>
 <div>List messag</div>
 {{#messages}}
     <div>
-    <b>{{id}}</b>
+        <b>{{id}}</b>
         <span>{{text}}</span>
         <i>{{tag}}</i>
     </div>
-    {{/messages}}
+{{/messages}}
 </body>
 </html>
