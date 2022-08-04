@@ -1,19 +1,26 @@
 package com.registr.domain;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.Set;
 
 @Entity
-@Table(schema = "public", name = "usr")
-public class User{
-@Id
+@Table(name = "usr")
+public class User implements UserDetails {
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String username;
-    private String pss;
+    private String password;
     private boolean active;
-    private String email;
-    private String dateReg;
-    private String dateLogin;
 
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
+    @Enumerated(EnumType.STRING)
+    private Set<Role> roles;
 
     public Long getId() {
         return id;
@@ -27,16 +34,41 @@ public class User{
         return username;
     }
 
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return isActive();
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
 
-    public String getPss() {
-        return pss;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getRoles();
     }
 
-    public void setPss(String pss) {
-        this.pss = pss;
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public boolean isActive() {
@@ -47,27 +79,11 @@ public class User{
         this.active = active;
     }
 
-    public String getEmail() {
-        return email;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getDateReg() {
-        return dateReg;
-    }
-
-    public void setDateReg(String dateReg) {
-        this.dateReg = dateReg;
-    }
-
-    public String getDateLogin() {
-        return dateLogin;
-    }
-
-    public void setDateLogin(String dateLogin) {
-        this.dateLogin = dateLogin;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }

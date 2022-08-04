@@ -1,5 +1,6 @@
 package com.registr.controller;
 
+import com.registr.domain.Role;
 import com.registr.domain.User;
 import com.registr.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.Date;
+import java.util.Collections;
 import java.util.Map;
 
 @Controller
@@ -22,13 +23,15 @@ public class RegistrationController {
 
     @PostMapping("/registration")
     public String addUser(User user, Map<String, Object> model) {
-        User userFromDB = userRepo.findByUsername(user.getUsername());
-        if (userFromDB != null) {
-            model.put("message", "This user already exists!");
+        User userFromDb = userRepo.findByUsername(user.getUsername());
+
+        if (userFromDb != null) {
+            model.put("message", "User exists!");
             return "registration";
         }
+
         user.setActive(true);
-        user.setDateReg(new Date().toString());
+        user.setRoles(Collections.singleton(Role.USER));
         userRepo.save(user);
 
         return "redirect:/login";
