@@ -2,7 +2,8 @@
 <#import "parts/login.ftlh" as l>
 
 <@c.page>
+<br>
 Add new user
-Тут был мессадж с баксом
+
 <@l.login "/registration" />
 </@c.page>
